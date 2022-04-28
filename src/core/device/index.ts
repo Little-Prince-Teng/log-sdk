@@ -1,9 +1,9 @@
 const UA = require('ua-device');
 
 export default class Device {
-    static getDeviceInfo (): IDeviceInfo | null {
+    static getDeviceInfo () {
         if (window.navigator && window.navigator.userAgent) {
-          const device: IUAResponse = new UA(window.navigator.userAgent)
+          const device = new UA(window.navigator.userAgent)
     
           const device_os_name =  device?.os?.name
           // 操作系统版本

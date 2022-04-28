@@ -27,33 +27,33 @@ function getLines(stack) {
  * @param data 错误数据
  * @returns 
  */
-function checkCache (data: any) {
-    const type = data.type
+// function checkCache (data: any) {
+//     const type = data.type
     
-    if (type === 'error') {
-      const errorMessage = data?.exception?.values?.[0]?.value
-      if (this.errorMap[errorMessage]) {
-        return false
-      } else {
-        this.errorMap[errorMessage] = true
-        return true
-      }
-    }
-    if (type === 'api') {
-      const url = data.url
-      if (this.errorMap[url]) {
-        return false
-      } else {
-        this.errorMap[url] = true
-        return true
-      }
-    }
+//     if (type === 'error') {
+//       const errorMessage = data?.exception?.values?.[0]?.value
+//       if (this.errorMap[errorMessage]) {
+//         return false
+//       } else {
+//         this.errorMap[errorMessage] = true
+//         return true
+//       }
+//     }
+//     if (type === 'api') {
+//       const url = data.url
+//       if (this.errorMap[url]) {
+//         return false
+//       } else {
+//         this.errorMap[url] = true
+//         return true
+//       }
+//     }
     
-    return true
-}
+//     return true
+// }
 
 export {
     getUploadData,
     getLines,
-    checkCache
+    // checkCache
 }

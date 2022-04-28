@@ -1,8 +1,8 @@
-import LogSdk from './index'
+import LogSdk from './log-sdk'
 
-function install (Vue: any, options = {}) {
-    if (install.installed) return
-    install.installed = true
+LogSdk.install = function (Vue: any, options = {}) {
+    // if (install.installed) return
+    // install.installed = true
     const isDef = (v) => v !== undefined
     Vue.mixin({
         beforeCreate() {
@@ -10,7 +10,7 @@ function install (Vue: any, options = {}) {
             if (isDef(this.$options.log)) {
                 this._logRoot = this
                 this._eventlog = this.$options.log
-                this._eventlog.init(this, ...options)
+                // this._eventlog.init(this, options)
             } else {
                 this._logRoot = (this.$parent && this.$parent._logRoot) || this
             }
@@ -18,6 +18,6 @@ function install (Vue: any, options = {}) {
     })
 }
 
-LogSdk.install = install
+// LogSdk.install = install
 
 export default LogSdk

@@ -1,4 +1,4 @@
-import Upload from '../upload/index.ts'
+import Upload from '../upload/index'
 
 export default class Performance {
     upload: Upload

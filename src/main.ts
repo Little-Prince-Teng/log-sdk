@@ -1,7 +1,7 @@
 import { createApp, h } from 'vue'
 import App from './App.vue'
 
-import LogSdk from './core/index.ts'
+import LogSdk from './core/index'
 
 // 主机
 const host = "cn-zhangjiakou.log.aliyuncs.com";

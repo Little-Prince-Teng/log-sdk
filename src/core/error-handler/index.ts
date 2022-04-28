@@ -1,9 +1,9 @@
-import Upload from '../upload/index.ts'
-import UserBehavior from '../user-behavitor/index.ts'
-import Device from '../device/index.ts'
-import { getUploadData, getLines } from '../utils/index.ts'
-import { getLastEvent } from '../utils/getLastEvent.ts'
-import { getSelector } from '../utils/getSelector.ts'
+import Upload from '../upload/index'
+import UserBehavior from '../user-behavitor/index'
+import Device from '../device/index'
+import { getUploadData, getLines } from '../utils/index'
+import getLastEvent from '../utils/getLastEvent'
+// import getSelector from '../utils/getSelector'
 
 export default class ErrorHandle {
     upload: Upload
@@ -32,25 +32,35 @@ export default class ErrorHandle {
     public instrumentError() {
         const that = this
         window.addEventListener('error', event => {
-            let uploadData
+            // let uploadData
+            console.log('error', event)
             const lastEvent = getLastEvent()
-            if (event.target && (event.target.src || event.target.href)) { // 资源加载错误
-                uploadData = getUploadData('stability', 'error', {
-                    errorType: "resourceError", // 错误类型: 资源加载错误
-                    filename: event.target.src || event.target.href, // 报错文件（哪个文件报错了）
-                    tagName: event.target.tagName, // 元素标签名
-                    selector: getSelector(event.target), // 代表最后一个操作的元素
-                })
-            } else { // js执行错误
-                uploadData = getUploadData('stability', 'error', {
-                    errorType: "jsError", // js执行错误
-                    message: event.message, // 报错信息
-                    filename: event.filename,
-                    position: `${event.lineno}:${event.colno}`, // 报错的行列位置
-                    stack: getLines(event.error.stack), // 错误堆栈
-                    selector: lastEvent ? getSelector(lastEvent.path) : "", // 代表最后一个操作的元素
-                })
-            }
+            const uploadData = getUploadData('stability', 'error', {
+                errorType: "jsError", // js执行错误
+                message: event.message, // 报错信息
+                filename: event.filename,
+                position: `${event.lineno}:${event.colno}`, // 报错的行列位置
+                stack: getLines(event.error.stack), // 错误堆栈
+                // selector: lastEvent ? getSelector(lastEvent.path) : "", // 代表最后一个操作的元素
+                selector: lastEvent
+            })
+            // if (event.target && (event.target.src || event.target.href)) { // 资源加载错误
+            //     uploadData = getUploadData('stability', 'error', {
+            //         errorType: "resourceError", // 错误类型: 资源加载错误
+            //         filename: event.target.src || event.target.href, // 报错文件（哪个文件报错了）
+            //         tagName: event.target.tagName, // 元素标签名
+            //         selector: getSelector(event.target), // 代表最后一个操作的元素
+            //     })
+            // } else { // js执行错误
+            //     uploadData = getUploadData('stability', 'error', {
+            //         errorType: "jsError", // js执行错误
+            //         message: event.message, // 报错信息
+            //         filename: event.filename,
+            //         position: `${event.lineno}:${event.colno}`, // 报错的行列位置
+            //         stack: getLines(event.error.stack), // 错误堆栈
+            //         selector: lastEvent ? getSelector(lastEvent.path) : "", // 代表最后一个操作的元素
+            //     })
+            // }
             that.formatData(uploadData)
         }, true)
         // window.onerror = function(msg: any, url: any, line: any, column: any, error: any): boolean {

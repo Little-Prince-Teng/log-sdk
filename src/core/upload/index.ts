@@ -30,6 +30,8 @@ export default class Upload {
     }
 
     add(data: any) {
+        console.log('data', data)
+        this.queue.push(this.formatCustomizeRequest(data))
         // if (cache.checkCache(data)) {
         //   this.queue.push(this.formatCustomizeRequest(data))
         // }
@@ -44,16 +46,25 @@ export default class Upload {
     }
 
     send() {
+        console.log('this.queue', this.queue)
         if (!this.queue.length) return
         const xhr = new XMLHttpRequest()
         // 接入日志系统，此处以阿里云为例
-        let body = JSON.stringify({
+        this.queue.forEach(q => {
+            for (const key in q) {
+                if (typeof q[key] !== "string") {
+                    q[key] = JSON.stringify(q[key])
+                }
+            }
+        })
+        const body = JSON.stringify({
             __logs__: this.queue
         })
+        const length = body.length
         xhr.open("POST", this.uploadHost, true)
         xhr.setRequestHeader("Content-Type", "application/json")
         xhr.setRequestHeader("x-log-apiversion", "0.6.0")
-        xhr.setRequestHeader("x-log-bodyrawsize", body.length)
+        xhr.setRequestHeader("x-log-bodyrawsize", length + '')
         xhr.onload = function () {
             // console.log(xhr.response)
         }

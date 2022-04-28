@@ -1,8 +1,8 @@
-import Upload from './upload/index.ts'
-import Device from './device/index.ts'
-import Performance from './performance/index.ts'
-import ErrorHandle from './error-handler/index.ts'
-import page from '../../package.json'
+import Upload from './upload/index'
+import Device from './device/index'
+import Performance from './performance/index'
+import ErrorHandle from './error-handler/index'
+// import page from '../../package.json'
 
 export interface ILogSdkOptions {
     uploadHost: string
@@ -11,7 +11,7 @@ export interface ILogSdkOptions {
 }
 
 export default class LogSdk {
-    version: string = page.version
+    // version: string = page.version
     uploadHost = ''
     http: any
     errorWhiteList: any[] = []
@@ -19,16 +19,17 @@ export default class LogSdk {
     upload: Upload
     device: Device
     errorHandle: ErrorHandle
+    static install: (Vue: any, options?: {}) => void
 
     constructor(options: ILogSdkOptions) {
         this.checkOption(options)
-        this.version = '0.0.1'
+        // this.version = '0.0.1'
         this.uploadHost = options.uploadHost
         this.errorWhiteList = options.errorWhiteList || []
         this.apiKey = options.apiKey
         // 上传组件
         this.upload = new Upload(options.uploadHost, this.apiKey)
-        this.device = new Device(this.upload)
+        this.device = new Device()
         new Performance(this.upload)
         this.errorHandle = new ErrorHandle(this.upload)
     }
