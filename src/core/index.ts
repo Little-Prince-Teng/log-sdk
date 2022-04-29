@@ -1,8 +1,9 @@
 import LogSdk from './log-sdk'
 
+let isInstalled
 LogSdk.install = function (Vue: any, options = {}) {
-    // if (install.installed) return
-    // install.installed = true
+    if (isInstalled) return
+    isInstalled = true
     const isDef = (v) => v !== undefined
     Vue.mixin({
         beforeCreate() {
@@ -17,7 +18,5 @@ LogSdk.install = function (Vue: any, options = {}) {
         }
     })
 }
-
-// LogSdk.install = install
 
 export default LogSdk

@@ -48,6 +48,7 @@ export default class Upload {
     send() {
         console.log('this.queue', this.queue)
         if (!this.queue.length) return
+        console.log('XMLHttpRequest', XMLHttpRequest)
         const xhr = new XMLHttpRequest()
         // 接入日志系统，此处以阿里云为例
         this.queue.forEach(q => {
